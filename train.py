@@ -129,6 +129,7 @@ def main(args):
         end = time.time()
         print("每个epoch训练的时间为：{}".format(end - start))
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=int, default=2)

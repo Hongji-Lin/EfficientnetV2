@@ -16,11 +16,11 @@ def read_split_data(root: str, val_rate: float = 0.2):
     assert os.path.exists(root), "dataset root: {} does not exist.".format(root)
 
     # 遍历文件夹，一个文件夹对应一个类别
-    flower_class = [cla for cla in os.listdir(root) if os.path.isdir(os.path.join(root, cla))]
+    bin_class = [cla for cla in os.listdir(root) if os.path.isdir(os.path.join(root, cla))]
     # 排序，保证各平台顺序一致
-    flower_class.sort()
+    bin_class.sort()
     # 生成类别名称以及对应的数字索引
-    class_indices = dict((k, v) for v, k in enumerate(flower_class))
+    class_indices = dict((k, v) for v, k in enumerate(bin_class))
     json_str = json.dumps(dict((val, key) for key, val in class_indices.items()), indent=4)
     with open('class_indices.json', 'w') as json_file:
         json_file.write(json_str)
@@ -32,7 +32,7 @@ def read_split_data(root: str, val_rate: float = 0.2):
     every_class_num = []  # 存储每个类别的样本总数
     supported = [".jpg", ".JPG", ".png", ".PNG"]  # 支持的文件后缀类型
     # 遍历每个文件夹下的文件
-    for cla in flower_class:
+    for cla in bin_class:
         cla_path = os.path.join(root, cla)
         # 遍历获取supported支持的所有文件路径
         images = [os.path.join(root, cla, i) for i in os.listdir(cla_path)
@@ -63,9 +63,9 @@ def read_split_data(root: str, val_rate: float = 0.2):
     plot_image = False
     if plot_image:
         # 绘制每种类别个数柱状图
-        plt.bar(range(len(flower_class)), every_class_num, align='center')
+        plt.bar(range(len(bin_class)), every_class_num, align='center')
         # 将横坐标0,1,2,3,4替换为相应的类别名称
-        plt.xticks(range(len(flower_class)), flower_class)
+        plt.xticks(range(len(bin_class)), bin_class)
         # 在柱状图上添加数值标签
         for i, v in enumerate(every_class_num):
             plt.text(x=i, y=v + 5, s=str(v), ha='center')
@@ -199,9 +199,9 @@ def plot_class_preds(net,
     assert os.path.exists(json_label_path), "not found {}".format(json_label_path)
     json_file = open(json_label_path, 'r')
     # {"0": "daisy"}
-    flower_class = json.load(json_file)
+    bin_class = json.load(json_file)
     # {"daisy": "0"}
-    class_indices = dict((v, k) for k, v in flower_class.items())
+    class_indices = dict((v, k) for k, v in bin_class.items())
 
     # reading label.txt file
     label_info = []
@@ -268,9 +268,9 @@ def plot_class_preds(net,
         plt.imshow(npimg.astype('uint8'))
 
         title = "{}, {:.2f}%\n(label: {})".format(
-            flower_class[str(preds[i])],  # predict class
+            bin_class[str(preds[i])],  # predict class
             probs[i] * 100,  # predict probability
-            flower_class[str(labels[i])]  # true class
+            bin_class[str(labels[i])]  # true class
         )
         ax.set_title(title, color=("green" if preds[i] == labels[i] else "red"))
 
