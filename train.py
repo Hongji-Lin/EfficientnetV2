@@ -1,6 +1,7 @@
 import os
 import math
 import argparse
+import time
 
 import torch
 import torch.optim as optim
@@ -92,6 +93,7 @@ def main(args):
     lf = lambda x: ((1 + math.cos(x * math.pi / args.epochs)) / 2) * (1 - args.lrf) + args.lrf  # cosine
     scheduler = lr_scheduler.LambdaLR(optimizer, lr_lambda=lf)
 
+    min_loss = 100000  # 随便设置一个比较大的数
     for epoch in range(args.epochs):
         # train
         train_loss, train_acc = train_one_epoch(model=model,
@@ -114,13 +116,20 @@ def main(args):
         tb_writer.add_scalar(tags[3], val_acc, epoch)
         tb_writer.add_scalar(tags[4], optimizer.param_groups[0]["lr"], epoch)
 
-        torch.save(model.state_dict(), "./weights/model-{}.pth".format(epoch))
+        # save model
+        time_str = time.strftime('%Y-%m-d%')
+        if val_loss < min_loss:
+            min_loss = val_loss
+            print("save model")
+            weights_savepath = "./weights/" + time_str + "_model_best.pth"
+            torch.save(model.state_dict(), weights_savepath)
+            print("最好的模型在：epoch = {}".format(epoch))
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=int, default=2)
-    parser.add_argument('--epochs', type=int, default=30)
+    parser.add_argument('--epochs', type=int, default=50)
     parser.add_argument('--batch-size', type=int, default=16)
     parser.add_argument('--lr', type=float, default=0.01)
     parser.add_argument('--lrf', type=float, default=0.01)
