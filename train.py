@@ -125,18 +125,11 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=8)
     parser.add_argument('--lr', type=float, default=0.01)
     parser.add_argument('--lrf', type=float, default=0.01)
-
-    # 数据集所在根目录
-    # https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz
-    parser.add_argument('--data-path', type=str,
-                        default="./data/train")
-
-    # download model weights
-    # 链接: https://pan.baidu.com/s/1uZX36rvrfEss-JGj4yfzbQ  密码: 5gu1
-    parser.add_argument('--weights', type=str, default='./weights/pre_efficientnetv2-s.pth',
-                        help='initial weights path')
+    parser.add_argument('--data-path', type=str, default="./data/train")
+    parser.add_argument('--weights', type=str, default='./weights/pre_efficientnetv2-s.pth', help='initial weights path')
     parser.add_argument('--freeze-layers', type=bool, default=True)
     parser.add_argument('--device', default='cuda:0', help='device id (i.e. 0 or 0,1 or cpu)')
+    # parser.add_argument('--device', default='cpu', help='device id (i.e. 0 or 0,1 or cpu)') # 這一句專門在只有cpu的電腦上執行
 
     opt = parser.parse_args()
 
