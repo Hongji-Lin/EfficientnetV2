@@ -1,1 +1,1 @@
-tensorboard --logdir=/home/lhj/Documents/GitHub/HRNet-Image-Classification/log/imagenet/cls_hrnet
+tensorboard --logdir=/home/lhj/PycharmProjects/EfficientnetV2/runs   # --bind_all --port '6006'
