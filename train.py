@@ -11,7 +11,7 @@ import torch.optim.lr_scheduler as lr_scheduler
 
 from model import efficientnetv2_s as create_model
 from my_dataset import MyDataSet
-from utils import read_split_data, train_one_epoch, evaluate
+from utils import read_split_data, train_one_epoch, evaluate, plot_class_preds
 
 
 def main(args):
@@ -96,6 +96,7 @@ def main(args):
     min_loss = 100000  # 随便设置一个比较大的数
     for epoch in range(args.epochs):
         # train
+        start = time.time()
         train_loss, train_acc = train_one_epoch(model=model,
                                                 optimizer=optimizer,
                                                 data_loader=train_loader,
@@ -117,14 +118,16 @@ def main(args):
         tb_writer.add_scalar(tags[4], optimizer.param_groups[0]["lr"], epoch)
 
         # save model
-        time_str = time.strftime('%Y-%m-d%')
+        time_str = time.strftime('%Y-%m-%d_')
         if val_loss < min_loss:
             min_loss = val_loss
             print("save model")
-            weights_savepath = "./weights/" + time_str + "_model_best.pth"
+            weights_savepath = "./weights/" + time_str + "model_best.pth"
             torch.save(model.state_dict(), weights_savepath)
             print("最好的模型在：epoch = {}".format(epoch))
 
+        end = time.time()
+        print("每个epoch训练的时间为：{}".format(end - start))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
