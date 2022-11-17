@@ -88,7 +88,7 @@ def main(args):
 
     pg = [p for p in model.parameters() if p.requires_grad]
     optimizer = optim.SGD(pg, lr=args.lr, momentum=0.9, weight_decay=1E-4)
-    # Scheduler https://arxiv.org/pdf/1812.01187.pdf
+
     lf = lambda x: ((1 + math.cos(x * math.pi / args.epochs)) / 2) * (1 - args.lrf) + args.lrf  # cosine
     scheduler = lr_scheduler.LambdaLR(optimizer, lr_lambda=lf)
 
@@ -99,7 +99,6 @@ def main(args):
                                                 data_loader=train_loader,
                                                 device=device,
                                                 epoch=epoch)
-
         scheduler.step()
 
         # validate
