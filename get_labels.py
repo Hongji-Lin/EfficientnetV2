@@ -43,7 +43,7 @@ def main():
         image_class = cla_idx[cla]
 
         for img in images:
-            txt_file.write(img + ' ' + str(image_class))
+            txt_file.write(os.path.join(cla_path, img) + ' ' + str(image_class))
             txt_file.write('\n')
     txt_file.close()
 

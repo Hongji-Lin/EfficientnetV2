@@ -2,16 +2,14 @@ import os
 import math
 import argparse
 import time
-
 import torch
 import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms
 import torch.optim.lr_scheduler as lr_scheduler
-
 from model import efficientnetv2_s as create_model
 from my_dataset import MyDataSet
-from utils import read_split_data, train_one_epoch, evaluate, plot_class_preds
+from utils import read_split_data, train_one_epoch, evaluate, plot_class_preds, plot_data_loader_image
 
 
 def main(args):
@@ -116,6 +114,19 @@ def main(args):
         tb_writer.add_scalar(tags[2], val_loss, epoch)
         tb_writer.add_scalar(tags[3], val_acc, epoch)
         tb_writer.add_scalar(tags[4], optimizer.param_groups[0]["lr"], epoch)
+
+        # 显示每个epoch的train_loader图片
+        input_img = plot_data_loader_image(train_loader)
+        tb_writer.add_figure("Input Images",
+                             figure=input_img,
+                             global_step=epoch)
+
+        # add figure into tensorboard
+        fig = plot_class_preds(model=model, data_loader=val_loader, device=device)
+
+        tb_writer.add_figure("predictions vs. actuals",
+                             figure=fig,
+                             global_step=epoch)
 
         # save model
         time_str = time.strftime('%Y-%m-%d_')
