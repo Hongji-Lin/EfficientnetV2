@@ -220,4 +220,3 @@ def plot_class_preds(model, data_loader, device):
             )
             ax.set_title(title, color=("green" if preds[i] == labels[i] else "red"))
         return fig
-    
