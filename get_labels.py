@@ -8,7 +8,7 @@ import os
 
 
 def main():
-    test_path = '/home/lhj/PycharmProjects/EfficientnetV2/data/train'
+    test_path = '/home/lhj/PycharmProjects/EfficientnetV2/data/data_8934'
     # img_idx_path = ''
     # cla_idx_path = ''
     # json_label_path

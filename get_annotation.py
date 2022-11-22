@@ -22,7 +22,7 @@ def get_info(classes_path):
 def main():
     classes_path = 'datas/annotations.txt'
     datasets_path = 'datasets'
-    datasets = ["train", "test"]
+    datasets = ["data_4880", "test"]
     classes, indexs = get_info(classes_path)
     
     for dataset in datasets:

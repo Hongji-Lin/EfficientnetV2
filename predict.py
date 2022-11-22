@@ -24,7 +24,7 @@ def main():
          transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])])
 
     # load image
-    test_path = '/home/lhj/PycharmProjects/EfficientnetV2/data/train'
+    test_path = '/data/data_4880'
     # 遍历文件夹，一个文件夹对应一个类别
     bin_class = [cla for cla in os.listdir(test_path) if os.path.isdir(os.path.join(test_path, cla))]
     bin_class.sort()

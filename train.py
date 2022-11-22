@@ -60,7 +60,7 @@ def main(args):
 
     val_loader = torch.utils.data.DataLoader(val_dataset,
                                              batch_size=batch_size,
-                                             shuffle=False,
+                                             shuffle=True,
                                              pin_memory=True,
                                              num_workers=nw,
                                              collate_fn=val_dataset.collate_fn)
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=16)
     parser.add_argument('--lr', type=float, default=0.01)
     parser.add_argument('--lrf', type=float, default=0.01)
-    parser.add_argument('--data-path', type=str, default="./data/train")
+    parser.add_argument('--data-path', type=str, default="./data/data_8934")
     parser.add_argument('--weights', type=str, default='./weights/pre_efficientnetv2-s.pth', help='initial weights path')
     parser.add_argument('--freeze-layers', type=bool, default=True)
     parser.add_argument('--device', default='cuda:0', help='device id (i.e. 0 or 0,1 or cpu)')
