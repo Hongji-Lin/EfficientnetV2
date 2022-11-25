@@ -220,3 +220,5 @@ cython_debug/
 .idea/misc.xml
 /runs/
 /Grad_CAM/test_img/
+/unet/runs/
+/unet/weights/

@@ -83,7 +83,7 @@ class UNet(nn.Module):
         self.up4 = Up(base_c * 2, base_c, bilinear)
 
         self.classifier = nn.Sequential(
-            nn.Linear(480 * 480 * 64, 2048),
+            nn.Linear(480 * 480 * 32, 2048),
             nn.ReLU(inplace=True),
             nn.Linear(2048, num_classes),
         )
