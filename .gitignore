@@ -219,3 +219,4 @@ cython_debug/
 .idea/EfficientnetV2.iml
 .idea/misc.xml
 /runs/
+/Grad_CAM/test_img/

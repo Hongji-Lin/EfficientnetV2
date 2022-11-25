@@ -81,7 +81,12 @@ class UNet(nn.Module):
         self.up2 = Up(base_c * 8, base_c * 4 // factor, bilinear)
         self.up3 = Up(base_c * 4, base_c * 2 // factor, bilinear)
         self.up4 = Up(base_c * 2, base_c, bilinear)
-        self.out_conv = OutConv(base_c, num_classes)    # the number of channel is 1
+
+        self.classifier = nn.Sequential(
+            nn.Linear(480 * 480 * 64, 2048),
+            nn.ReLU(inplace=True),
+            nn.Linear(2048, num_classes),
+        )
 
     def forward(self, x: torch.Tensor) -> Dict[str, torch.Tensor]:
         x1 = self.in_conv(x)
@@ -93,6 +98,6 @@ class UNet(nn.Module):
         x = self.up2(x, x3)
         x = self.up3(x, x2)
         x = self.up4(x, x1)
-        logits = self.out_conv(x)
+        x = self.classifier(x)
 
-        return {"out": logits}
+        return x
