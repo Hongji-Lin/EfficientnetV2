@@ -60,7 +60,8 @@ def main(args):
                                                pin_memory=True,
                                                num_workers=8,
                                                collate_fn=train_dataset.collate_fn)
-    print(train_loader)
+    train_imgs, _ = next(iter(train_loader))
+    print(train_imgs.shape)
 
     val_loader = torch.utils.data.DataLoader(val_dataset,
                                              batch_size=batch_size,
@@ -68,7 +69,8 @@ def main(args):
                                              pin_memory=True,
                                              num_workers=8,
                                              collate_fn=val_dataset.collate_fn)
-    print(val_loader)
+    val_imgs, _ = next(iter(train_loader))
+    print(val_imgs.shape)
 
     # 如果存在预训练权重则载入
     model = UNet(in_channels=3, num_classes=2, bilinear=True, base_c=16).to(device)
