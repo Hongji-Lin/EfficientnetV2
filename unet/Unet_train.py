@@ -157,7 +157,7 @@ if __name__ == '__main__':
     parser.add_argument('--lr', type=float, default=0.01)
     parser.add_argument('--lrf', type=float, default=0.01)
     parser.add_argument('--data-path', type=str, default="/home/binoverflow/EfficientnetV2/data/data_unet_test")
-    parser.add_argument('--weights', type=str, default="/home/binoverflow/EfficientnetV2/unet/weights", help='initial weights path')
+    parser.add_argument('--weights', type=str, default="", help='initial weights path')
     parser.add_argument('--freeze-layers', type=bool, default=False)
     parser.add_argument('--device', default='cuda:0', help='device id (i.e. 0 or 0,1 or cpu)')
     # parser.add_argument('--device', default='cpu', help='device id (i.e. 0 or 0,1 or cpu)') # 這一句專門在只有cpu的電腦上執行
