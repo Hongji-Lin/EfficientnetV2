@@ -15,7 +15,7 @@ from torch.optim import optimizer, lr_scheduler
 from torch.utils.tensorboard import SummaryWriter
 from torchvision.transforms import transforms
 
-from my_dataset import MyDataSet
+from unet.train_utils.my_dataset import MyDataSet
 from src import UNet
 from unet.train_utils.utils import read_split_data, train_one_epoch, evaluate, plot_data_loader_image, plot_class_preds
 
