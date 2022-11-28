@@ -108,12 +108,14 @@ def main(args):
                                                 device=device,
                                                 epoch=epoch)
         scheduler.step()
+        print("train_imgs_shape:{}".format(train_imgs.shape))
 
         # validate
         val_loss, val_acc = evaluate(model=model,
                                      data_loader=val_loader,
                                      device=device,
                                      epoch=epoch)
+        print("val_imgs_shape:{}".format(val_imgs.shape))
 
         tags = ["train_loss", "train_acc", "val_loss", "val_acc", "learning_rate"]
         tb_writer.add_scalar(tags[0], train_loss, epoch)
