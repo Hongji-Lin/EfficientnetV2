@@ -82,7 +82,6 @@ class UNet(nn.Module):
         self.up3 = Up(base_c * 4, base_c * 2 // factor, bilinear)
         self.up4 = Up(base_c * 2, base_c, bilinear)
 
-        print(up4.size())
         self.classifier = nn.Sequential(
             nn.Linear(224 * 224 * 16, 2048),
             nn.ReLU(inplace=True),
@@ -99,6 +98,7 @@ class UNet(nn.Module):
         x = self.up2(x, x3)
         x = self.up3(x, x2)
         x = self.up4(x, x1)
+        print(x.size())
         x = self.classifier(x)
 
         return x
