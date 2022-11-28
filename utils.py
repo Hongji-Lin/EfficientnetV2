@@ -130,7 +130,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch):
         sample_num += images.shape[0]
 
         pred = model(images.to(device))
-        pred_classes = torch.max(pred, dim=0)[1]
+        pred_classes = torch.max(pred, dim=1)[1]
         accu_num += torch.eq(pred_classes, labels.to(device)).sum()
 
         loss = loss_function(pred, labels.to(device))
