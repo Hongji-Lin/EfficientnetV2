@@ -21,6 +21,7 @@ from train_utils.utils import read_split_data, train_one_epoch, evaluate, plot_d
 
 
 def main(args):
+    torch.autograd.set_detect_anomaly(True)
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
 
     print(args)
