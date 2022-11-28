@@ -61,7 +61,7 @@ def main(args):
                                                num_workers=8,
                                                collate_fn=train_dataset.collate_fn)
     train_imgs, _ = next(iter(train_loader))
-    print(train_imgs.shape)
+    print("train_imgs_shape:{}".format(train_imgs.shape))
 
     val_loader = torch.utils.data.DataLoader(val_dataset,
                                              batch_size=batch_size,
@@ -70,7 +70,7 @@ def main(args):
                                              num_workers=8,
                                              collate_fn=val_dataset.collate_fn)
     val_imgs, _ = next(iter(train_loader))
-    print(val_imgs.shape)
+    print("val_imgs_shape:{}".format(val_imgs.shape))
 
     # 如果存在预训练权重则载入
     model = UNet(in_channels=3, num_classes=2, bilinear=True, base_c=16).to(device)
@@ -108,14 +108,12 @@ def main(args):
                                                 device=device,
                                                 epoch=epoch)
         scheduler.step()
-        print("train_imgs_shape:{}".format(train_imgs.shape))
 
         # validate
         val_loss, val_acc = evaluate(model=model,
                                      data_loader=val_loader,
                                      device=device,
                                      epoch=epoch)
-        print("val_imgs_shape:{}".format(val_imgs.shape))
 
         tags = ["train_loss", "train_acc", "val_loss", "val_acc", "learning_rate"]
         tb_writer.add_scalar(tags[0], train_loss, epoch)
