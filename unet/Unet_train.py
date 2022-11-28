@@ -124,18 +124,18 @@ def main(args):
         tb_writer.add_scalar(tags[3], val_acc, epoch)
         tb_writer.add_scalar(tags[4], optimizer.param_groups[0]["lr"], epoch)
 
-        # 显示每个epoch的train_loader图片
-        input_img = plot_data_loader_image(train_loader)
-        tb_writer.add_figure("Input Images",
-                             figure=input_img,
-                             global_step=epoch)
-
-        # add figure into tensorboard
-        fig = plot_class_preds(model=model, data_loader=val_loader, device=device)
-
-        tb_writer.add_figure("predictions vs. actuals",
-                             figure=fig,
-                             global_step=epoch)
+        # # 显示每个epoch的train_loader图片
+        # input_img = plot_data_loader_image(train_loader)
+        # tb_writer.add_figure("Input Images",
+        #                      figure=input_img,
+        #                      global_step=epoch)
+        #
+        # # add figure into tensorboard
+        # fig = plot_class_preds(model=model, data_loader=val_loader, device=device)
+        #
+        # tb_writer.add_figure("predictions vs. actuals",
+        #                      figure=fig,
+        #                      global_step=epoch)
 
         # save model
         time_str = time.strftime('%Y-%m-%d_')
