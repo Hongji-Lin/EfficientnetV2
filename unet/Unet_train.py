@@ -141,10 +141,9 @@ def main(args):
         if val_loss < min_loss:
             min_loss = val_loss
             print("save model")
-            weights_savepath = "/home/binoverflow/Efficientnet/unet/weights/" + time_str + "model_best.pth"
+            weights_savepath = "/home/binoverflow/EfficientnetV2/unet/weights" + time_str + "model_best.pth"
             torch.save(model.state_dict(), weights_savepath)
             print("最好的模型在：epoch = {}".format(epoch))
-
         end = time.time()
         print("每个epoch训练的时间为：{}".format(end - start))
 
