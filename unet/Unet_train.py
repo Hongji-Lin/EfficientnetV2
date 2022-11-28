@@ -75,12 +75,13 @@ def main(args):
     # 如果存在预训练权重则载入
     model = UNet(in_channels=3, num_classes=2, bilinear=True, base_c=16).to(device)
     if args.weights != "":
-        if os.path.exists(args.weights):
-            weights_dict = torch.load(args.weights, map_location=device)
-            load_weights_dict = {k: v for k, v in weights_dict.items()
-                                 if model.state_dict()[k].numel() == v.numel()}
-            print(model.load_state_dict(load_weights_dict, strict=False))
-        else:
+        try:
+            if os.path.exists(args.weights):
+                weights_dict = torch.load(args.weights, map_location=device)
+                load_weights_dict = {k: v for k, v in weights_dict.items()
+                                     if model.state_dict()[k].numel() == v.numel()}
+                print(model.load_state_dict(load_weights_dict, strict=False))
+        except:
             raise FileNotFoundError("not found weights file: {}".format(args.weights))
 
     # 是否冻结权重
@@ -140,7 +141,7 @@ def main(args):
         if val_loss < min_loss:
             min_loss = val_loss
             print("save model")
-            weights_savepath = "../unet/weights" + time_str + "model_best.pth"
+            weights_savepath = "/home/binoverflow/Efficientnet/unet/weights" + time_str + "model_best.pth"
             torch.save(model.state_dict(), weights_savepath)
             print("最好的模型在：epoch = {}".format(epoch))
 
@@ -156,7 +157,7 @@ if __name__ == '__main__':
     parser.add_argument('--lr', type=float, default=0.01)
     parser.add_argument('--lrf', type=float, default=0.01)
     parser.add_argument('--data-path', type=str, default="/home/binoverflow/EfficientnetV2/data/data_unet_test")
-    parser.add_argument('--weights', type=str, default="/home/binoverflow/EfficientnetV2/unet/weight", help='initial weights path')
+    parser.add_argument('--weights', type=str, default="/home/binoverflow/EfficientnetV2/unet/weights", help='initial weights path')
     parser.add_argument('--freeze-layers', type=bool, default=False)
     parser.add_argument('--device', default='cuda:0', help='device id (i.e. 0 or 0,1 or cpu)')
     # parser.add_argument('--device', default='cpu', help='device id (i.e. 0 or 0,1 or cpu)') # 這一句專門在只有cpu的電腦上執行
