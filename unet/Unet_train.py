@@ -74,14 +74,14 @@ def main(args):
 
     # 如果存在预训练权重则载入
     model = UNet(in_channels=3, num_classes=2, bilinear=True, base_c=16).to(device)
-    # if args.weights != "":
-    #     if os.path.exists(args.weights):
-    #         weights_dict = torch.load(args.weights, map_location=device)
-    #         load_weights_dict = {k: v for k, v in weights_dict.items()
-    #                              if model.state_dict()[k].numel() == v.numel()}
-    #         print(model.load_state_dict(load_weights_dict, strict=False))
-    #     else:
-    #         raise FileNotFoundError("not found weights file: {}".format(args.weights))
+    if args.weights != "":
+        if os.path.exists(args.weights):
+            weights_dict = torch.load(args.weights, map_location=device)
+            load_weights_dict = {k: v for k, v in weights_dict.items()
+                                 if model.state_dict()[k].numel() == v.numel()}
+            print(model.load_state_dict(load_weights_dict, strict=False))
+        else:
+            raise FileNotFoundError("not found weights file: {}".format(args.weights))
 
     # 是否冻结权重
     if args.freeze_layers:
@@ -122,18 +122,18 @@ def main(args):
         tb_writer.add_scalar(tags[3], val_acc, epoch)
         tb_writer.add_scalar(tags[4], optimizer.param_groups[0]["lr"], epoch)
 
-        # # 显示每个epoch的train_loader图片
-        # input_img = plot_data_loader_image(train_loader)
-        # tb_writer.add_figure("Input Images",
-        #                      figure=input_img,
-        #                      global_step=epoch)
-        #
-        # # add figure into tensorboard
-        # fig = plot_class_preds(model=model, data_loader=val_loader, device=device)
-        #
-        # tb_writer.add_figure("predictions vs. actuals",
-        #                      figure=fig,
-        #                      global_step=epoch)
+        # 显示每个epoch的train_loader图片
+        input_img = plot_data_loader_image(train_loader)
+        tb_writer.add_figure("Input Images",
+                             figure=input_img,
+                             global_step=epoch)
+
+        # add figure into tensorboard
+        fig = plot_class_preds(model=model, data_loader=val_loader, device=device)
+
+        tb_writer.add_figure("predictions vs. actuals",
+                             figure=fig,
+                             global_step=epoch)
 
         # save model
         time_str = time.strftime('%Y-%m-%d_')
@@ -146,9 +146,6 @@ def main(args):
 
         end = time.time()
         print("每个epoch训练的时间为：{}".format(end - start))
-
-        gc.collect()
-        torch.cuda.empty_cache()
 
 
 if __name__ == '__main__':
