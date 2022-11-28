@@ -59,7 +59,7 @@ def main(args):
                                                batch_size=batch_size,
                                                shuffle=True,
                                                pin_memory=True,
-                                               num_workers=8,
+                                               num_workers=4,
                                                collate_fn=train_dataset.collate_fn)
     train_imgs, _ = next(iter(train_loader))
     print("train_imgs_shape:{}".format(train_imgs.shape))
@@ -68,7 +68,7 @@ def main(args):
                                              batch_size=batch_size,
                                              shuffle=True,
                                              pin_memory=True,
-                                             num_workers=8,
+                                             num_workers=4,
                                              collate_fn=val_dataset.collate_fn)
     val_imgs, _ = next(iter(train_loader))
     print("val_imgs_shape:{}".format(val_imgs.shape))
@@ -152,7 +152,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_classes', type=int, default=2)
-    parser.add_argument('--epochs', type=int, default=100)
+    parser.add_argument('--epochs', type=int, default=50)
     parser.add_argument('--batch-size', type=int, default=2)
     parser.add_argument('--lr', type=float, default=0.01)
     parser.add_argument('--lrf', type=float, default=0.01)
