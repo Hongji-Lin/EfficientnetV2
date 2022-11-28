@@ -33,11 +33,11 @@ def main(args):
     train_images_path, train_images_label, val_images_path, val_images_label = read_split_data(args.data_path)
 
     data_transform = {
-        "train": transforms.Compose([transforms.RandomResizedCrop([224, 224]),
+        "train": transforms.Compose([transforms.RandomResizedCrop([112, 112]),
                                      transforms.RandomHorizontalFlip(),
                                      transforms.ToTensor(),
                                      transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])]),
-        "val": transforms.Compose([transforms.Resize([224, 224]),
+        "val": transforms.Compose([transforms.Resize([112, 112]),
                                    transforms.ToTensor(),
                                    transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])])}
 

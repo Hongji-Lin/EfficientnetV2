@@ -83,9 +83,9 @@ class UNet(nn.Module):
         self.up4 = Up(base_c * 2, base_c, bilinear)
 
         self.classifier = nn.Sequential(
-            nn.Linear(224 * 224 * 16, 2048),
+            nn.Linear(112 * 112 * 16, 1024),
             nn.ReLU(inplace=True),
-            nn.Linear(2048, num_classes),
+            nn.Linear(1024, num_classes),
         )
 
     def forward(self, x: torch.Tensor) -> Dict[str, torch.Tensor]:
